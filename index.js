@@ -12,12 +12,18 @@ mongoose.connect(
 const userRoutes = require("./api/routes/user");
 const listRoutes = require("./api/routes/list");
 const todoRoutes = require("./api/routes/todo");
+const { StatusCodes } = require("http-status-codes");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/user", userRoutes);
 app.use("/list", listRoutes);
 app.use("/todo", todoRoutes);
+app.use("/", (req, res) => {
+  res.status(StatusCodes.UNAUTHORIZED).json({
+    Error: "You are not authorized to access this API",
+  });
+});
 
 app.listen(port, () => {
   console.log("Listening at port: " + port);
