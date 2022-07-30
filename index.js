@@ -22,6 +22,10 @@ app.use("/user", userRoutes);
 app.use("/list", listRoutes);
 app.use("/todo", todoRoutes);
 
+app.use("/", (req, res) => {
+  res.send("Server working");
+});
+
 app.listen(port, () => {
   console.log("Listening at port: " + port);
 });
