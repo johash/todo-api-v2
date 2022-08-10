@@ -80,4 +80,23 @@ router.post("/login", (req, res) => {
   });
 });
 
+router.get("/verify", (req, res) => {
+  const accessToken = req.headers["x-auth-token"];
+  if (accessToken) {
+    JWT.verify(accessToken, process.env.JWT_SECRET, (err, payload) => {
+      if (err) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+          message: "Invalid Token",
+          status: StatusCodes.UNAUTHORIZED,
+        });
+      } else {
+        return res.status(StatusCodes.OK).json({
+          message: "Token Validated",
+          status: StatusCodes.OK,
+        });
+      }
+    });
+  }
+});
+
 module.exports = router;
