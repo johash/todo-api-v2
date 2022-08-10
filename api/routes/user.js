@@ -68,6 +68,7 @@ router.post("/login", (req, res) => {
           return res.status(StatusCodes.OK).json({
             accessToken: token,
             message: "Login successful",
+            user,
           });
         } else {
           return res.status(StatusCodes.UNAUTHORIZED).json({
