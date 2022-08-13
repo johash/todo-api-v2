@@ -4,8 +4,8 @@ const { StatusCodes } = require("http-status-codes");
 const Todo = require("../models/todo.model");
 
 router.get(
-  "/",
-  body("listId").exists().withMessage("Must provide a list ID"),
+  "/:id",
+  param("id").exists().withMessage("Must provide a list ID"),
   (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -14,7 +14,7 @@ router.get(
       });
     } else {
       Todo.find()
-        .where({ listId: req.body.listId })
+        .where({ listId: req.params.id })
         .exec()
         .then((todos) => {
           res.status(StatusCodes.OK).json({
